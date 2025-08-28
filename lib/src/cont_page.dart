@@ -11,6 +11,7 @@ class ContPage extends StatefulWidget {
 
 class _ContPageState extends State<ContPage> {
   int _counter = 0;
+  List<int> resultados = [];
 
   void _incrementCounter() {
     setState(() {
@@ -36,12 +37,25 @@ class _ContPageState extends State<ContPage> {
     });
   }
 
+  void _agregarResultado() {
+    setState(() {
+      resultados.add(_counter);
+    });
+  }
+
+  void _vaciar() {
+    setState(() {
+      resultados.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: Colors.lightBlue[600],
+        title: Text(widget.title, style: TextStyle(color: Colors.white)),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -52,9 +66,19 @@ class _ContPageState extends State<ContPage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            const Text('Resultados guardados:'),
+            Text(resultados.isEmpty ? '\n' : '$resultados\n'),
             ElevatedButton(
                 onPressed: _multimplicar,
-                child: const Text('Multiplicar por 2'))
+                child: const Text('Multiplicar por 2')),
+            const SizedBox(height: 15.0),
+            ElevatedButton(
+                onPressed: _agregarResultado,
+                child: const Text('Guardar resultado')),
+            const SizedBox(height: 15.0),
+            ElevatedButton(
+                onPressed: _vaciar,
+                child: const Text('Vaciar resultados guardados'))
           ],
         ),
       ),
@@ -67,22 +91,28 @@ class _ContPageState extends State<ContPage> {
       children: <Widget>[
         const Expanded(child: SizedBox()),
         FloatingActionButton(
+            onPressed: _cerear,
+            tooltip: 'Cero',
+            backgroundColor: Colors.lightBlue[600],
+            child: const Icon(
+              Icons.exposure_zero,
+              color: Colors.white,
+            )),
+        const SizedBox(height: 5),
+        FloatingActionButton(
             onPressed: _restar,
             tooltip: 'Decrementar',
-            backgroundColor: Colors.greenAccent,
-            child: const Icon(Icons.remove)),
-        const SizedBox(width: 30.0),
+            backgroundColor: Colors.lightBlue[600],
+            child: const Icon(Icons.remove, color: Colors.white)),
+        const SizedBox(height: 5),
         FloatingActionButton(
             onPressed: _incrementCounter,
             tooltip: 'Incrementar',
-            backgroundColor: Colors.greenAccent,
-            child: const Icon(Icons.add)),
-        const SizedBox(width: 30.0),
-        FloatingActionButton(
-            onPressed: _cerear,
-            tooltip: 'Cero',
-            backgroundColor: Colors.greenAccent,
-            child: const Icon(Icons.exposure_zero)),
+            backgroundColor: Colors.lightBlue[600],
+            child: const Icon(
+              Icons.add,
+              color: Colors.white,
+            )),
       ],
     );
   }
